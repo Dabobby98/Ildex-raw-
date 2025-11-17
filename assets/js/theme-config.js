@@ -14,7 +14,7 @@ $(function(){
 var themeConfig = {
     init: false,
     options: {
-        color: 'red-1',
+        color: 'yellow-1',
         background: 'light',
         layout: 'wide',
         direction: 'ltr'
