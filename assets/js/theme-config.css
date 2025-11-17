@@ -1,4 +1,5 @@
 .theme-config {
+    display: none;
     position: fixed;
     z-index: 999999;
     top: 80px;
