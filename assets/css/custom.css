@@ -1,0 +1,15 @@
+/* Event Sponsors - Logo alignment */
+.partners-carousel .owl-carousel .owl-item img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+}
+
+.partners-carousel .owl-carousel .owl-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+}
