@@ -211,8 +211,8 @@ var theme = function () {
         },
         // CountDown
         initCountDown: function () {
-            var austDay = new Date();
-            austDay = new Date(austDay.getFullYear() + 1, 1 - 1, 26);
+            // Countdown target set to 20 May 2026
+            var austDay = new Date(2026, 5 - 1, 20);
             $('#defaultCountdown').countdown({until: austDay});
             $('#year').text(austDay.getFullYear());
         },

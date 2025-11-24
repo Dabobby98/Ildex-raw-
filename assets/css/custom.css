@@ -13,3 +13,61 @@
     justify-content: center;
     min-height: 80px;
 }
+
+/* Price table customizations for Tiêu Chuẩn */
+.price-options { text-align: center; }
+.price-options .price-option { font-size: 14px; color: #333; margin: 4px 0; }
+.price-options .price-number { font-weight:700; margin-left:6px; }
+.price-options .price-unit { font-weight:600; margin-left:4px; }
+.package-components { padding-left: 18px; margin: 8px 0 0 0; color: #333; text-align: left !important; }
+.package-components li { margin-bottom:6px; }
+.package-components li i { color: #2ea44f; margin-right: 8px; width: 18px; display: inline-block; text-align: center; }
+.price-value .small-note { display:block; font-size:12px; color:#666; margin-top:6px; }
+
+/* Reduce size of price display elements to 50% */
+.price-value .price-number,
+.price-value .price-unit,
+.price-value .price-per,
+.price-number,
+.price-unit,
+.price-per {
+    font-size: 50% !important;
+    line-height: 1 !important;
+}
+
+@media (max-width: 480px) {
+    .price-value .price-number,
+    .price-value .price-unit,
+    .price-value .price-per,
+    .price-number,
+    .price-unit,
+    .price-per {
+        font-size: 60% !important;
+    }
+}
+
+/* Hide the decorative ribbon/badge on featured price tables (e.g., BEST) */
+.price-table.featured:before,
+.price-table.featured:after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Give Gian Thô (first) and Cao Cấp (third) price boxes the same yellow border as the featured package */
+.price-tables > .col-xsp-6:nth-child(1) .price-table,
+.price-tables > .col-xsp-6:nth-child(3) .price-table {
+    border-color: #f1be03 !important;
+}
+
+/* Also ensure the header accent inside those boxes uses the yellow tone */
+.price-tables > .col-xsp-6:nth-child(1) .price-table .price-label .price-label-title,
+.price-tables > .col-xsp-6:nth-child(3) .price-table .price-label .price-label-title {
+    color: #0d1d31 !important;
+}
+
+/* Footer styles */
+.site-footer { background:#f5f5f5; padding:22px 0; border-top:1px solid #e8e8e8; }
+.site-footer .footer-contact { text-align: left; padding: 6px 20px; max-width: 1100px; margin: 0 auto; }
+.site-footer .footer-contact p { margin: 4px 0; }
+.site-footer .footer-contact a { color:#435469; text-decoration:none; font-weight:600; }
+.site-footer .footer-contact a:hover { text-decoration:underline; }
