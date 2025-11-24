@@ -71,15 +71,33 @@
 .site-footer .footer-contact p { margin: 4px 0; }
 .site-footer .footer-contact a { color:#435469; text-decoration:none; font-weight:600; }
 .site-footer .footer-contact a:hover { text-decoration:underline; }
+./* Khoảng cách tổng thể của khu vực banner */
+.banner-section {
+    padding: 40px 0; /* tạo không gian trên dưới */
+}
+
+/* Khung banner */
 .banner-wrap {
     width: 100%;
     max-width: 1920px;
-    margin: 0 auto;
+    margin: 0 auto 30px auto; /* margin dưới 30px cho thoáng */
 }
 
+/* Ảnh banner responsive */
 .banner-img {
     width: 100%;
     height: auto;
     display: block;
+    border-radius: 10px; /* bo nhẹ cho đẹp */
     object-fit: cover;
 }
+
+/* Tiêu đề dưới banner */
+.section-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 10px;
+    color: #222;
+}
+
