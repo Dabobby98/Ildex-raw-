@@ -1,52 +1,91 @@
-// Content Contact Form
+// Content Contact Form - Mailchimp Integration
 // ---------------------------------------------------------------------------------------
 $(function () {
-    $("#af-form .form-control").tooltip({placement: 'top', trigger: 'manual'}).tooltip('hide');
-    $('#af-form .form-control').blur(function () {
+
+    var $contactForm = $('#contact-form');
+    var $contactFormAlert = $contactForm.find('.form-alert');
+    var $contactSubmitBtn = $contactForm.find('#contact-submit-btn');
+    var originalContactBtnText = $contactSubmitBtn.html();
+
+    $contactForm.find('.form-control').tooltip({placement: 'top', trigger: 'manual'}).tooltip('hide');
+    $contactForm.find('.form-control').on('blur', function(){
         $(this).tooltip({placement: 'top', trigger: 'manual'}).tooltip('hide');
     });
 
-    $("#af-form #submit_btn").click(function () {
-        // validate and process form
-        // first hide any error messages
-        $('#af-form .error').hide();
-
-        var name = $("#af-form input#name").val();
-        if (name == "" || name == "Name...." || name == "Name" || name == "Name *" || name == "Type Your Name...") {
-            $("#af-form input#name").tooltip({placement: 'bottom', trigger: 'manual'}).tooltip('show');
-            $("#af-form input#name").focus();
-            return false;
-        }
-        var email = $("#af-form input#email").val();
-        //var filter = /^[a-zA-Z0-9]+[a-zA-Z0-9_.-]+[a-zA-Z0-9_-]+@[a-zA-Z0-9]+[a-zA-Z0-9.-]+[a-zA-Z0-9]+.[a-z]{2,4}$/;
+    // Handle contact form submission
+    $contactForm.on('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate Email
+        var email = $contactForm.find('.input-email').val();
         var filter = /^[a-zA-Z0-9]+[a-zA-Z0-9_.-]+[a-zA-Z0-9_-]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/;
-        //console.log(filter.test(email));
         if (!filter.test(email)) {
-            $("#af-form input#email").tooltip({placement: 'bottom', trigger: 'manual'}).tooltip('show');
-            $("#af-form input#email").focus();
-            return false;
-        }
-        var message = $("#af-form #input-message").val();
-        if (message == "" || message == "Message...." || message == "Message" || message == "Message *" || message == "Type Your Message...") {
-            $("#af-form #input-message").tooltip({placement: 'bottom', trigger: 'manual'}).tooltip('show');
-            $("#af-form #input-message").focus();
+            $contactForm.find('.input-email').tooltip({placement: 'top', trigger: 'manual'}).tooltip('show');
+            $contactForm.find('.input-email').focus();
             return false;
         }
 
-        var dataString = 'name=' + name + '&email=' + email + '&message=' + message;
-        //alert (dataString);return false;
+        // Show loading message
+        showContactFormAlert('info', 'Đang gửi tin nhắn của bạn...');
+        $contactSubmitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang gửi...');
 
+        // Submit to Mailchimp using JSONP
+        var mailchimpUrl = 'https://ildex-vietnam.us11.list-manage.com/subscribe/post-json?u=2dae538b15c3fb52220a11db5&id=2d5994350c&c=?';
+        
+        var formData = $contactForm.serialize();
+        
         $.ajax({
-            type:"POST",
-            url:"assets/php/contact-form.php",
-            data:dataString,
-            success:function () {
-                $('#af-form').prepend("<div class=\"alert alert-success fade in\"><button class=\"close\" data-dismiss=\"alert\" type=\"button\">&times;</button><strong>Contact Form Submitted!</strong> We will be in touch soon.</div>");
-                $('#af-form')[0].reset();
+            type: 'GET',
+            url: mailchimpUrl,
+            data: formData,
+            cache: false,
+            dataType: 'jsonp',
+            contentType: 'application/json; charset=utf-8',
+            success: function(data) {
+                if (data.result === 'success') {
+                    showContactFormAlert('success', 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.');
+                    $contactForm[0].reset();
+                } else {
+                    var errorMsg = data.msg || 'Có lỗi xảy ra. Vui lòng thử lại.';
+                    errorMsg = errorMsg.replace(/0 - /g, '').replace(/1 - /g, '');
+                    showContactFormAlert('error', errorMsg);
+                }
+                $contactSubmitBtn.prop('disabled', false).html(originalContactBtnText);
+            },
+            error: function() {
+                showContactFormAlert('error', 'Có lỗi kết nối. Vui lòng kiểm tra mạng và thử lại.');
+                $contactSubmitBtn.prop('disabled', false).html(originalContactBtnText);
             }
         });
+
         return false;
     });
+
+    function showContactFormAlert(type, message) {
+        var alertClass = 'alert-info';
+        var icon = 'fa-info-circle';
+        
+        if (type === 'success') {
+            alertClass = 'alert-success';
+            icon = 'fa-check-circle';
+        } else if (type === 'error') {
+            alertClass = 'alert-danger';
+            icon = 'fa-exclamation-circle';
+        }
+        
+        $contactFormAlert.html(
+            '<div class="alert ' + alertClass + ' alert-dismissible fade in" role="alert">' +
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span></button>' +
+            '<i class="fa ' + icon + '"></i> ' + message +
+            '</div>'
+        );
+        
+        $('html, body').animate({
+            scrollTop: $contactFormAlert.offset().top - 100
+        }, 500);
+    }
+
 });
 
 // Content Registration Form - Mailchimp Integration

@@ -140,6 +140,64 @@
 .registration-form .selectpicker-wrapper .bootstrap-select .btn {
     height: 45px;
     line-height: 45px;
+}
+
+/* Contact Form Mailchimp Styles */
+.contact-form {
+    margin-top: 0;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-form .form-alert {
+    margin-bottom: 20px;
+}
+
+.contact-form .form-alert .alert {
+    padding: 15px 20px;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+.contact-form .form-alert .alert i {
+    margin-right: 8px;
+}
+
+.contact-form .form-alert .alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+.contact-form .form-alert .alert-danger {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+
+.contact-form .form-alert .alert-info {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}
+
+.contact-form .form-control {
+    height: 45px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #333;
+}
+
+.contact-form textarea.form-control {
+    height: auto;
+    min-height: 120px;
+}
+
+.contact-form .form-control:focus {
+    background-color: #fff;
+    border-color: #f0b400;
+    box-shadow: 0 0 8px rgba(240, 180, 0, 0.3);
     padding-top: 0;
     padding-bottom: 0;
 }

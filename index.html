@@ -1965,7 +1965,7 @@
                  <!-- /Banner horti -->
 
                 <!-- PAGE CONTACT -->
-                <section class="page-section color">
+                <section class="page-section color" id="contact">
                     <div class="container">
                         <h1 class="section-title">
                             <span
@@ -1975,7 +1975,7 @@
                                 ><span class="fa-stack"
                                     ><i class="fa rhex fa-stack-2x"></i
                                     ><i
-                                        class="fa fa-ticket fa-stack-1x"
+                                        class="fa fa-envelope fa-stack-1x"
                                     ></i></span
                             ></span>
                             <span
@@ -1988,70 +1988,66 @@
 
                         <!-- Contact form -->
                         <form
-                            name="af-form"
+                            id="contact-form"
+                            name="contact-form"
+                            class="contact-form row"
+                            action="#"
                             method="post"
-                            action="#contact"
-                            class="af-form row"
-                            id="af-form"
                         >
-                            <div class="col-sm-12 af-outer af-required">
-                                <div class="form-group af-inner">
+                            <div class="col-sm-12 form-alert"></div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group" data-animation="fadeInUp" data-animation-delay="100">
                                     <input
-                                        type="text"
-                                        name="name"
-                                        id="name"
-                                        placeholder="Tên Của Bạn"
-                                        value=""
-                                        size="30"
+                                        type="email"
+                                        name="EMAIL"
+                                        class="form-control input-email"
                                         data-toggle="tooltip"
-                                        title="Name is required"
-                                        class="form-control placeholder"
+                                        title="Email là bắt buộc"
+                                        placeholder="Email của bạn *"
+                                        required
                                     />
                                 </div>
                             </div>
 
-                            <div class="col-sm-12 af-outer af-required">
-                                <div class="form-group af-inner">
+                            <div class="col-sm-12">
+                                <div class="form-group" data-animation="fadeInUp" data-animation-delay="200">
                                     <input
                                         type="text"
-                                        name="email"
-                                        id="email"
-                                        placeholder="Email"
-                                        value=""
-                                        size="30"
-                                        data-toggle="tooltip"
-                                        title="Email is required"
-                                        class="form-control placeholder"
+                                        name="FNAME"
+                                        class="form-control input-name"
+                                        placeholder="Tên của bạn"
                                     />
                                 </div>
                             </div>
 
-                            <div class="col-sm-12 af-outer af-required">
-                                <div class="form-group af-inner">
+                            <div class="col-sm-12">
+                                <div class="form-group" data-animation="fadeInUp" data-animation-delay="300">
                                     <textarea
-                                        name="message"
-                                        id="input-message"
+                                        name="MMERGE5"
+                                        class="form-control input-message"
                                         placeholder="Nội dung"
                                         rows="4"
-                                        cols="50"
-                                        data-toggle="tooltip"
-                                        title="Message is required"
-                                        class="form-control placeholder"
                                     ></textarea>
                                 </div>
                             </div>
 
-                            <div
-                                class="col-sm-12 af-outer af-required text-center"
-                            >
-                                <div class="form-group af-inner">
-                                    <input
+                            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                                <input type="text" name="b_2dae538b15c3fb52220a11db5_2d5994350c" tabindex="-1" value="">
+                            </div>
+
+                            <div class="col-sm-12 text-center">
+                                <div class="form-group">
+                                    <button
+                                        data-animation="flipInY"
+                                        data-animation-delay="400"
+                                        class="btn btn-theme btn-theme-lg btn-theme-transparent submit-button"
                                         type="submit"
-                                        name="submit"
-                                        class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent"
-                                        id="submit_btn"
-                                        value="Gửi Đi"
-                                    />
+                                        id="contact-submit-btn"
+                                    >
+                                        Gửi Đi
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </button>
                                 </div>
                             </div>
                         </form>
