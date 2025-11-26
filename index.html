@@ -1472,12 +1472,29 @@
                             id="registration-form"
                             name="registration-form"
                             class="registration-form"
-                            action="#"
+                            action="https://ildex-vietnam.us11.list-manage.com/subscribe/post-json?u=2dae538b15c3fb52220a11db5&id=2d5994350c&c=?"
                             method="post"
                         >
                             <div class="row">
                                 <div class="col-sm-12 form-alert"></div>
-                                <div class="col-sm-6 col-md-3">
+                                <div class="col-sm-6 col-md-4">
+                                    <div
+                                        class="form-group"
+                                        data-animation="fadeInUp"
+                                        data-animation-delay="100"
+                                    >
+                                        <input
+                                            type="text"
+                                            name="MERGE1"
+                                            class="form-control input-company"
+                                            data-toggle="tooltip"
+                                            title="Tên Công Ty là bắt buộc"
+                                            placeholder="Tên Công Ty *"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
                                     <div
                                         class="form-group"
                                         data-animation="fadeInUp"
@@ -1485,59 +1502,87 @@
                                     >
                                         <input
                                             type="text"
-                                            class="form-control input-name"
-                                            data-toggle="tooltip"
-                                            title="Name is required"
-                                            placeholder="Tên của bạn"
+                                            name="MERGE2"
+                                            class="form-control input-industry"
+                                            placeholder="Ngành nghề kinh doanh"
                                         />
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-3">
+                                <div class="col-sm-6 col-md-4">
+                                    <div
+                                        class="form-group"
+                                        data-animation="fadeInUp"
+                                        data-animation-delay="300"
+                                    >
+                                        <input
+                                            type="text"
+                                            name="MERGE3"
+                                            class="form-control input-name"
+                                            data-toggle="tooltip"
+                                            title="Tên là bắt buộc"
+                                            placeholder="Tên của bạn *"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
                                     <div
                                         class="form-group"
                                         data-animation="fadeInUp"
                                         data-animation-delay="400"
                                     >
                                         <input
-                                            type="text"
-                                            class="form-control input-email"
+                                            type="tel"
+                                            name="MERGE4"
+                                            class="form-control input-phone"
                                             data-toggle="tooltip"
-                                            title="Mail is required"
-                                            placeholder="Email của bạn"
+                                            title="Số điện thoại là bắt buộc"
+                                            placeholder="Số điện thoại *"
+                                            required
                                         />
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-3">
+                                <div class="col-sm-6 col-md-4">
                                     <div
                                         class="form-group"
                                         data-animation="fadeInUp"
-                                        data-animation-delay="600"
+                                        data-animation-delay="500"
                                     >
                                         <input
-                                            type="text"
-                                            class="form-control input-phone"
-                                            placeholder="Số điện thoại"
+                                            type="email"
+                                            name="EMAIL"
+                                            class="form-control input-email"
+                                            data-toggle="tooltip"
+                                            title="Email là bắt buộc"
+                                            placeholder="Email của bạn *"
+                                            required
                                         />
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-3">
+                                <div class="col-sm-6 col-md-4">
                                     <div
                                         class="form-group selectpicker-wrapper"
                                         data-animation="fadeInUp"
-                                        data-animation-delay="800"
+                                        data-animation-delay="600"
                                     >
                                         <select
+                                            name="MERGE6"
                                             class="selectpicker input-price"
                                             data-live-search="true"
                                             data-width="100%"
                                             data-toggle="tooltip"
-                                            title="Register as"
+                                            title="Chọn loại gian hàng"
+                                            required
                                         >
-                                            <option>Gian Thô</option>
-                                            <option>Gian Tiêu Chuẩn</option>
-                                            <option>Gian Cao Cấp</option>
+                                            <option value="">Chọn loại gian hàng *</option>
+                                            <option value="Gian Thường">Gian Thường</option>
+                                            <option value="Gian Tiêu Chuẩn">Gian Tiêu Chuẩn</option>
+                                            <option value="Gian Cao Cấp">Gian Cao Cấp</option>
                                         </select>
                                     </div>
+                                </div>
+                                <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                                    <input type="text" name="b_2dae538b15c3fb52220a11db5_2d5994350c" tabindex="-1" value="">
                                 </div>
                                 <div class="col-md-12 overflowed">
                                     <div class="text-center margin-top">
@@ -1546,6 +1591,7 @@
                                             data-animation-delay="100"
                                             class="btn btn-theme btn-theme-xl submit-button"
                                             type="submit"
+                                            id="mc-submit-btn"
                                         >
                                             Đăng Ký
                                             <i

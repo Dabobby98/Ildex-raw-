@@ -71,7 +71,8 @@
 .site-footer .footer-contact p { margin: 4px 0; }
 .site-footer .footer-contact a { color:#435469; text-decoration:none; font-weight:600; }
 .site-footer .footer-contact a:hover { text-decoration:underline; }
-./* Khoảng cách tổng thể của khu vực banner */
+
+/* Khoảng cách tổng thể của khu vực banner */
 .banner-section {
     padding: 40px 0; /* tạo không gian trên dưới */
 }
@@ -103,6 +104,44 @@
 .price-highlight {
     color: #f1be03;
     font-weight: 700;
+}
+
+/* Registration Form Mailchimp Styles */
+.registration-form .form-alert {
+    margin-bottom: 20px;
+}
+
+.registration-form .form-alert .alert {
+    padding: 15px 20px;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+.registration-form .form-alert .alert i {
+    margin-right: 8px;
+}
+
+.registration-form .form-alert .alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+.registration-form .form-alert .alert-danger {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+
+.registration-form .form-control {
+    height: 45px;
+}
+
+.registration-form .selectpicker-wrapper .bootstrap-select .btn {
+    height: 45px;
+    line-height: 45px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 

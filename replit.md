@@ -32,6 +32,11 @@ This is a static HTML website for ILDEX VIETNAM 2026, an agricultural livestock 
 - 2025-11-26: Initial import and Replit environment setup
 - Configured static web server on port 5000
 - Set up deployment configuration for production hosting
+- 2025-11-26: Integrated Mailchimp form submission
+  - Added 6 form fields matching Mailchimp: Tên Công Ty, Ngành nghề, Tên, SĐT, Email, Loại Gian Hàng
+  - Implemented AJAX submission via JSONP to avoid page redirect
+  - Added success/error message handling in Vietnamese
+  - Mailchimp list: https://ildex-vietnam.us11.list-manage.com/subscribe?u=2dae538b15c3fb52220a11db5&id=2d5994350c
 
 ## User Preferences
 None specified yet.
