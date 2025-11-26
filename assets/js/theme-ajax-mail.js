@@ -57,21 +57,26 @@ $(function () {
     var $formAlert = $form.find('.form-alert');
     var $submitBtn = $form.find('.submit-button');
     var originalBtnText = $submitBtn.html();
+    var iframeName = 'mailchimp-iframe-' + Date.now();
 
     $form.find('.form-control').tooltip({placement: 'top', trigger: 'manual'}).tooltip('hide');
     $form.find('.form-control').on('blur', function(){
         $(this).tooltip({placement: 'top', trigger: 'manual'}).tooltip('hide');
     });
 
+    // Create hidden iframe for form submission
+    var $iframe = $('<iframe name="' + iframeName + '" style="display:none;"></iframe>');
+    $('body').append($iframe);
+
     // Handle form submission
     $form.on('submit', function(e) {
-        e.preventDefault();
         
         // Validate Company Name
         var company = $form.find('.input-company').val();
         if (company == '' || company.trim() == '') {
             $form.find('.input-company').tooltip({placement: 'top', trigger: 'manual'}).tooltip('show');
             $form.find('.input-company').focus();
+            e.preventDefault();
             return false;
         }
 
@@ -80,6 +85,7 @@ $(function () {
         if (name == '' || name.trim() == '') {
             $form.find('.input-name').tooltip({placement: 'top', trigger: 'manual'}).tooltip('show');
             $form.find('.input-name').focus();
+            e.preventDefault();
             return false;
         }
 
@@ -89,6 +95,7 @@ $(function () {
         if (!filter.test(email)) {
             $form.find('.input-email').tooltip({placement: 'top', trigger: 'manual'}).tooltip('show');
             $form.find('.input-email').focus();
+            e.preventDefault();
             return false;
         }
 
@@ -97,6 +104,7 @@ $(function () {
         if (phone == '' || phone.trim() == '') {
             $form.find('.input-phone').tooltip({placement: 'top', trigger: 'manual'}).tooltip('show');
             $form.find('.input-phone').focus();
+            e.preventDefault();
             return false;
         }
 
@@ -104,55 +112,31 @@ $(function () {
         var boothType = $form.find('select[name="MERGE6"]').val();
         if (!boothType || boothType == '') {
             showFormAlert('error', 'Vui lòng chọn loại gian hàng.');
+            e.preventDefault();
             return false;
         }
+
+        // Set form to submit to iframe
+        $form.attr('target', iframeName);
+        $form.attr('action', 'https://ildex-vietnam.us11.list-manage.com/subscribe/post');
 
         // Show loading state
         $submitBtn.html('<i class="fa fa-spinner fa-spin"></i> Đang gửi...');
         $submitBtn.prop('disabled', true);
 
-        // Submit to Mailchimp via JSONP
-        $.ajax({
-            type: 'GET',
-            url: $form.attr('action'),
-            data: $form.serialize(),
-            cache: false,
-            dataType: 'jsonp',
-            jsonp: 'c',
-            contentType: 'application/json; charset=utf-8',
+        // Handle iframe load (submission complete)
+        $iframe.off('load').on('load', function() {
+            $submitBtn.html(originalBtnText);
+            $submitBtn.prop('disabled', false);
             
-            error: function(err) {
-                $submitBtn.html(originalBtnText);
-                $submitBtn.prop('disabled', false);
-                showFormAlert('error', 'Không thể kết nối. Vui lòng thử lại sau.');
-            },
-            
-            success: function(data) {
-                $submitBtn.html(originalBtnText);
-                $submitBtn.prop('disabled', false);
-                
-                if (data.result === 'success') {
-                    showFormAlert('success', 'Cảm ơn bạn đã đăng ký! Chúng tôi sẽ liên hệ với bạn sớm.');
-                    $form[0].reset();
-                    $form.find('.selectpicker').selectpicker('refresh');
-                } else {
-                    var message = data.msg || 'Đã xảy ra lỗi. Vui lòng thử lại.';
-                    message = message.replace(/<[^>]*>/g, '');
-                    
-                    if (message.indexOf('already subscribed') > -1) {
-                        message = 'Email này đã được đăng ký trước đó.';
-                    } else if (message.indexOf('valid email') > -1 || message.indexOf('invalid') > -1) {
-                        message = 'Vui lòng nhập địa chỉ email hợp lệ.';
-                    } else if (message.indexOf('required') > -1) {
-                        message = 'Vui lòng điền đầy đủ các thông tin bắt buộc.';
-                    }
-                    
-                    showFormAlert('error', message);
-                }
-            }
+            // Show success message (we can't read iframe content due to cross-origin)
+            showFormAlert('success', 'Cảm ơn bạn đã đăng ký! Chúng tôi sẽ liên hệ với bạn sớm.');
+            $form[0].reset();
+            $form.find('.selectpicker').selectpicker('refresh');
         });
 
-        return false;
+        // Allow form to submit normally to iframe
+        return true;
     });
 
     function showFormAlert(type, message) {
