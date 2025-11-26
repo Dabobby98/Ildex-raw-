@@ -107,29 +107,41 @@ $(function () {
             return false;
         }
 
-        // Build Mailchimp URL with all form data
-        var mailchimpUrl = 'https://ildex-vietnam.us11.list-manage.com/subscribe/post?u=2dae538b15c3fb52220a11db5&id=2d5994350c&f_id=00368fe1f0';
-        
-        // Add all form fields as URL parameters
-        var formData = $form.serializeArray();
-        $.each(formData, function(i, field) {
-            mailchimpUrl += '&' + encodeURIComponent(field.name) + '=' + encodeURIComponent(field.value);
-        });
+        // Show loading message
+        showFormAlert('info', 'Đang gửi thông tin đăng ký...');
+        $submitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang gửi...');
 
-        // Show confirmation message
-        showFormAlert('info', 'Đang chuyển đến trang đăng ký của Mailchimp để xác nhận...');
+        // Submit to Mailchimp using JSONP to avoid redirect
+        var mailchimpUrl = 'https://ildex-vietnam.us11.list-manage.com/subscribe/post-json?u=2dae538b15c3fb52220a11db5&id=2d5994350c&c=?';
         
-        // Open Mailchimp in new tab to complete CAPTCHA
-        setTimeout(function() {
-            window.open(mailchimpUrl, '_blank');
-            
-            // Show message to user
-            showFormAlert('success', 'Vui lòng hoàn tất xác nhận CAPTCHA trong tab mới đã mở. Sau khi hoàn tất, bạn có thể đóng tab đó và quay lại đây.');
-            
-            // Reset form
-            $form[0].reset();
-            $form.find('.selectpicker').selectpicker('refresh');
-        }, 1000);
+        // Build form data
+        var formData = $form.serialize();
+        
+        $.ajax({
+            type: 'GET',
+            url: mailchimpUrl,
+            data: formData,
+            cache: false,
+            dataType: 'jsonp',
+            contentType: 'application/json; charset=utf-8',
+            success: function(data) {
+                if (data.result === 'success') {
+                    showFormAlert('success', 'Đăng ký thành công! Cảm ơn bạn đã đăng ký tham gia ILDEX Vietnam 2026. Chúng tôi sẽ liên hệ với bạn sớm.');
+                    $form[0].reset();
+                    $form.find('.selectpicker').selectpicker('refresh');
+                } else {
+                    var errorMsg = data.msg || 'Có lỗi xảy ra. Vui lòng thử lại.';
+                    // Remove Mailchimp error codes
+                    errorMsg = errorMsg.replace(/0 - /g, '').replace(/1 - /g, '');
+                    showFormAlert('error', errorMsg);
+                }
+                $submitBtn.prop('disabled', false).html(originalBtnText);
+            },
+            error: function() {
+                showFormAlert('error', 'Có lỗi kết nối. Vui lòng kiểm tra mạng và thử lại.');
+                $submitBtn.prop('disabled', false).html(originalBtnText);
+            }
+        });
 
         return false;
     });
