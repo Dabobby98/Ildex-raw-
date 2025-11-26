@@ -101,14 +101,14 @@ $(function () {
         }
 
         // Validate Booth Type
-        var boothType = $form.find('select[name="MERGE6"]').val();
+        var boothType = $form.find('select[name="MMERGE2"]').val();
         if (!boothType || boothType == '') {
             showFormAlert('error', 'Vui lòng chọn loại gian hàng.');
             return false;
         }
 
         // Build Mailchimp URL with all form data
-        var mailchimpUrl = 'https://ildex-vietnam.us11.list-manage.com/subscribe/post?u=2dae538b15c3fb52220a11db5&id=2d5994350c';
+        var mailchimpUrl = 'https://ildex-vietnam.us11.list-manage.com/subscribe/post?u=2dae538b15c3fb52220a11db5&id=2d5994350c&f_id=00368fe1f0';
         
         // Add all form fields as URL parameters
         var formData = $form.serializeArray();
