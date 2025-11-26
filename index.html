@@ -1474,9 +1474,8 @@
     class="registration-form"
     action="https://ildex-vietnam.us11.list-manage.com/subscribe/post?u=2dae538b15c3fb52220a11db5&id=2d5994350c"
     method="post"
-    target="_blank" <!-- mở tab mới để khách không bị rời khỏi landing page -->
 >
-    <!-- 2 cái hidden bắt buộc của Mailchimp -->
+    <!-- 2 hidden bắt buộc của Mailchimp -->
     <input type="hidden" name="u" value="2dae538b15c3fb52220a11db5">
     <input type="hidden" name="id" value="2d5994350c">
 
@@ -1488,7 +1487,7 @@
             <div class="form-group" data-animation="fadeInUp" data-animation-delay="200">
                 <input
                     type="text"
-                    name="FNAME"                 <!-- Mailchimp nhận diện là First Name -->
+                    name="FNAME"
                     class="form-control input-name"
                     placeholder="Tên của bạn"
                     required
@@ -1496,12 +1495,12 @@
             </div>
         </div>
 
-        <!-- Email (bắt buộc) -->
+        <!-- Email -->
         <div class="col-sm-6 col-md-3">
             <div class="form-group" data-animation="fadeInUp" data-animation-delay="400">
                 <input
                     type="email"
-                    name="EMAIL"                 <!-- Mailchimp bắt buộc phải là EMAIL -->
+                    name="EMAIL"
                     class="form-control input-email"
                     placeholder="Email của bạn"
                     required
@@ -1513,8 +1512,8 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group" data-animation="fadeInUp" data-animation-delay="600">
                 <input
-                    type="text"
-                    name="PHONE"                 <!-- Mailchimp sẽ lưu vào field Phone -->
+                    type="tel"
+                    name="PHONE"
                     class="form-control input-phone"
                     placeholder="Số điện thoại"
                 />
@@ -1525,10 +1524,11 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group selectpicker-wrapper" data-animation="fadeInUp" data-animation-delay="800">
                 <select
-                    name="MMERGE3"               <!-- tao đặt tạm là MMERGE3, mày có thể đổi tên cho đẹp hơn trong Mailchimp nếu muốn -->
+                    name="MMERGE3"
                     class="selectpicker input-price"
                     data-live-search="true"
                     data-width="100%"
+                    required
                 >
                     <option value="">Chọn loại gian hàng</option>
                     <option value="Gian Thô">Gian Thô</option>
@@ -1538,7 +1538,7 @@
             </div>
         </div>
 
-        <!-- Nút submit -->
+        <!-- Nút Đăng Ký -->
         <div class="col-md-12 overflowed">
             <div class="text-center margin-top">
                 <button
@@ -1554,6 +1554,35 @@
         </div>
     </div>
 </form>
+
+<!-- Đoạn script quan trọng: bỏ qua AJAX cũ của theme, submit thẳng Mailchimp + hiện thông báo đẹp -->
+<script>
+document.getElementById('registration-form').addEventListener('submit', function(e) {
+    // Bỏ qua toàn bộ validation + AJAX cũ của theme
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Lấy data từ form
+    const formData = new FormData(this);
+
+    // Gửi thẳng tới Mailchimp
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+    })
+    .then(() => {
+        // Thông báo thành công (mày có thể đổi nội dung)
+        document.querySelector('.form-alert').innerHTML = 
+            '<div class="alert alert-success">Đăng ký thành công! Chúng tôi sẽ liên hệ bạn sớm nhất.</div>';
+        this.reset(); // xóa form
+    })
+    .catch(() => {
+        document.querySelector('.form-alert').innerHTML = 
+            '<div class="alert alert-danger">Có lỗi xảy ra, vui lòng thử lại!</div>';
+    });
+});
+</script>
                     </div>
                 </section>
                 <section class="page-section light">
