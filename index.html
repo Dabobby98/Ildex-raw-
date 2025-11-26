@@ -1468,68 +1468,40 @@
                                 ></span
                             >
                         </h1>
-                        <form
-    id="registration-form"
-    name="registration-form"
+                        <!-- ĐỔI ID FORM ĐI ĐỂ NÉ JS CŨ CỦA THEME -->
+<form
+    id="mc-form"               <!-- đổi từ registration-form → mc-form -->
     class="registration-form"
     action="https://ildex-vietnam.us11.list-manage.com/subscribe/post?u=2dae538b15c3fb52220a11db5&id=2d5994350c"
     method="post"
 >
-    <!-- 2 hidden bắt buộc của Mailchimp -->
     <input type="hidden" name="u" value="2dae538b15c3fb52220a11db5">
     <input type="hidden" name="id" value="2d5994350c">
 
     <div class="row">
         <div class="col-sm-12 form-alert"></div>
 
-        <!-- Tên -->
         <div class="col-sm-6 col-md-3">
             <div class="form-group" data-animation="fadeInUp" data-animation-delay="200">
-                <input
-                    type="text"
-                    name="FNAME"
-                    class="form-control input-name"
-                    placeholder="Tên của bạn"
-                    required
-                />
+                <input type="text" name="FNAME" class="form-control input-name" placeholder="Tên của bạn" required />
             </div>
         </div>
 
-        <!-- Email -->
         <div class="col-sm-6 col-md-3">
             <div class="form-group" data-animation="fadeInUp" data-animation-delay="400">
-                <input
-                    type="email"
-                    name="EMAIL"
-                    class="form-control input-email"
-                    placeholder="Email của bạn"
-                    required
-                />
+                <input type="email" name="EMAIL" class="form-control input-email" placeholder="Email của bạn" required />
             </div>
         </div>
 
-        <!-- Số điện thoại -->
         <div class="col-sm-6 col-md-3">
             <div class="form-group" data-animation="fadeInUp" data-animation-delay="600">
-                <input
-                    type="tel"
-                    name="PHONE"
-                    class="form-control input-phone"
-                    placeholder="Số điện thoại"
-                />
+                <input type="tel" name="PHONE" class="form-control input-phone" placeholder="Số điện thoại" />
             </div>
         </div>
 
-        <!-- Loại gian hàng -->
         <div class="col-sm-6 col-md-3">
             <div class="form-group selectpicker-wrapper" data-animation="fadeInUp" data-animation-delay="800">
-                <select
-                    name="MMERGE3"
-                    class="selectpicker input-price"
-                    data-live-search="true"
-                    data-width="100%"
-                    required
-                >
+                <select name="MMERGE3" class="selectpicker input-price" required>
                     <option value="">Chọn loại gian hàng</option>
                     <option value="Gian Thô">Gian Thô</option>
                     <option value="Gian Tiêu Chuẩn">Gian Tiêu Chuẩn</option>
@@ -1538,51 +1510,15 @@
             </div>
         </div>
 
-        <!-- Nút Đăng Ký -->
         <div class="col-md-12 overflowed">
             <div class="text-center margin-top">
-                <button
-                    data-animation="flipInY"
-                    data-animation-delay="100"
-                    class="btn btn-theme btn-theme-xl submit-button"
-                    type="submit"
-                >
-                    Đăng Ký
-                    <i class="fa fa-arrow-circle-right"></i>
+                <button type="submit" class="btn btn-theme btn-theme-xl submit-button">
+                    Đăng Ký <i class="fa fa-arrow-circle-right"></i>
                 </button>
             </div>
         </div>
     </div>
 </form>
-
-<!-- Đoạn script quan trọng: bỏ qua AJAX cũ của theme, submit thẳng Mailchimp + hiện thông báo đẹp -->
-<script>
-document.getElementById('registration-form').addEventListener('submit', function(e) {
-    // Bỏ qua toàn bộ validation + AJAX cũ của theme
-    e.preventDefault();
-    e.stopPropagation();
-
-    // Lấy data từ form
-    const formData = new FormData(this);
-
-    // Gửi thẳng tới Mailchimp
-    fetch(this.action, {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors'
-    })
-    .then(() => {
-        // Thông báo thành công (mày có thể đổi nội dung)
-        document.querySelector('.form-alert').innerHTML = 
-            '<div class="alert alert-success">Đăng ký thành công! Chúng tôi sẽ liên hệ bạn sớm nhất.</div>';
-        this.reset(); // xóa form
-    })
-    .catch(() => {
-        document.querySelector('.form-alert').innerHTML = 
-            '<div class="alert alert-danger">Có lỗi xảy ra, vui lòng thử lại!</div>';
-    });
-});
-</script>
                     </div>
                 </section>
                 <section class="page-section light">
@@ -2117,5 +2053,35 @@ document.getElementById('registration-form').addEventListener('submit', function
                 }
             });
         </script>
+        <script>
+document.getElementById('mc-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Hiển thị loading trên nút (tùy chọn, đẹp hơn)
+    const btn = this.querySelector('button[type="submit"]');
+    const oldText = btn.innerHTML;
+    btn.innerHTML = 'Đang gửi...';
+    btn.disabled = true;
+
+    fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this),
+        mode: 'no-cors'
+    })
+    .then(() => {
+        document.querySelector('.form-alert').innerHTML = 
+            '<div class="alert alert-success"><strong>Cảm ơn bạn!</strong> Đăng ký thành công, chúng tôi sẽ liên hệ sớm nhất.</div>';
+        this.reset();
+    })
+    .catch(() => {
+        document.querySelector('.form-alert').innerHTML = 
+            '<div class="alert alert-danger">Có lỗi xảy ra, vui lòng thử lại!</div>';
+    })
+    .finally(() => {
+        btn.innerHTML = oldText;
+        btn.disabled = false;
+    });
+});
+</script>
     </body>
 </html>
