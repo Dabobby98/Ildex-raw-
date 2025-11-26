@@ -29,7 +29,7 @@ $(function () {
         showContactFormAlert('info', 'Đang gửi tin nhắn của bạn...');
         $contactSubmitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang gửi...');
 
-        // Submit to Mailchimp using JSONP
+        // Submit to Mailchimp using JSONP - sử dụng list ID đúng cho Contact/Questions
         var mailchimpUrl = 'https://ildex-vietnam.us11.list-manage.com/subscribe/post-json?u=2dae538b15c3fb52220a11db5&id=2d5994350c&c=?';
         
         var formData = $contactForm.serialize();
@@ -47,7 +47,8 @@ $(function () {
                     $contactForm[0].reset();
                 } else {
                     var errorMsg = data.msg || 'Có lỗi xảy ra. Vui lòng thử lại.';
-                    errorMsg = errorMsg.replace(/0 - /g, '').replace(/1 - /g, '');
+                    // Remove Mailchimp error codes
+                    errorMsg = errorMsg.replace(/0 - /g, '').replace(/1 - /g, '').replace(/6 - /g, '');
                     showContactFormAlert('error', errorMsg);
                 }
                 $contactSubmitBtn.prop('disabled', false).html(originalContactBtnText);
