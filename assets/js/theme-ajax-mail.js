@@ -57,26 +57,21 @@ $(function () {
     var $formAlert = $form.find('.form-alert');
     var $submitBtn = $form.find('.submit-button');
     var originalBtnText = $submitBtn.html();
-    var iframeName = 'mailchimp-iframe-' + Date.now();
 
     $form.find('.form-control').tooltip({placement: 'top', trigger: 'manual'}).tooltip('hide');
     $form.find('.form-control').on('blur', function(){
         $(this).tooltip({placement: 'top', trigger: 'manual'}).tooltip('hide');
     });
 
-    // Create hidden iframe for form submission
-    var $iframe = $('<iframe name="' + iframeName + '" style="display:none;"></iframe>');
-    $('body').append($iframe);
-
     // Handle form submission
     $form.on('submit', function(e) {
+        e.preventDefault();
         
         // Validate Company Name
         var company = $form.find('.input-company').val();
         if (company == '' || company.trim() == '') {
             $form.find('.input-company').tooltip({placement: 'top', trigger: 'manual'}).tooltip('show');
             $form.find('.input-company').focus();
-            e.preventDefault();
             return false;
         }
 
@@ -85,7 +80,6 @@ $(function () {
         if (name == '' || name.trim() == '') {
             $form.find('.input-name').tooltip({placement: 'top', trigger: 'manual'}).tooltip('show');
             $form.find('.input-name').focus();
-            e.preventDefault();
             return false;
         }
 
@@ -95,7 +89,6 @@ $(function () {
         if (!filter.test(email)) {
             $form.find('.input-email').tooltip({placement: 'top', trigger: 'manual'}).tooltip('show');
             $form.find('.input-email').focus();
-            e.preventDefault();
             return false;
         }
 
@@ -104,7 +97,6 @@ $(function () {
         if (phone == '' || phone.trim() == '') {
             $form.find('.input-phone').tooltip({placement: 'top', trigger: 'manual'}).tooltip('show');
             $form.find('.input-phone').focus();
-            e.preventDefault();
             return false;
         }
 
@@ -112,36 +104,47 @@ $(function () {
         var boothType = $form.find('select[name="MERGE6"]').val();
         if (!boothType || boothType == '') {
             showFormAlert('error', 'Vui lòng chọn loại gian hàng.');
-            e.preventDefault();
             return false;
         }
 
-        // Set form to submit to iframe
-        $form.attr('target', iframeName);
-        $form.attr('action', 'https://ildex-vietnam.us11.list-manage.com/subscribe/post');
-
-        // Show loading state
-        $submitBtn.html('<i class="fa fa-spinner fa-spin"></i> Đang gửi...');
-        $submitBtn.prop('disabled', true);
-
-        // Handle iframe load (submission complete)
-        $iframe.off('load').on('load', function() {
-            $submitBtn.html(originalBtnText);
-            $submitBtn.prop('disabled', false);
-            
-            // Show success message (we can't read iframe content due to cross-origin)
-            showFormAlert('success', 'Cảm ơn bạn đã đăng ký! Chúng tôi sẽ liên hệ với bạn sớm.');
-            $form[0].reset();
-            $form.find('.selectpicker').selectpicker('refresh');
+        // Build Mailchimp URL with all form data
+        var mailchimpUrl = 'https://ildex-vietnam.us11.list-manage.com/subscribe/post?u=2dae538b15c3fb52220a11db5&id=2d5994350c';
+        
+        // Add all form fields as URL parameters
+        var formData = $form.serializeArray();
+        $.each(formData, function(i, field) {
+            mailchimpUrl += '&' + encodeURIComponent(field.name) + '=' + encodeURIComponent(field.value);
         });
 
-        // Allow form to submit normally to iframe
-        return true;
+        // Show confirmation message
+        showFormAlert('info', 'Đang chuyển đến trang đăng ký của Mailchimp để xác nhận...');
+        
+        // Open Mailchimp in new tab to complete CAPTCHA
+        setTimeout(function() {
+            window.open(mailchimpUrl, '_blank');
+            
+            // Show message to user
+            showFormAlert('success', 'Vui lòng hoàn tất xác nhận CAPTCHA trong tab mới đã mở. Sau khi hoàn tất, bạn có thể đóng tab đó và quay lại đây.');
+            
+            // Reset form
+            $form[0].reset();
+            $form.find('.selectpicker').selectpicker('refresh');
+        }, 1000);
+
+        return false;
     });
 
     function showFormAlert(type, message) {
-        var alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
-        var icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+        var alertClass = 'alert-info';
+        var icon = 'fa-info-circle';
+        
+        if (type === 'success') {
+            alertClass = 'alert-success';
+            icon = 'fa-check-circle';
+        } else if (type === 'error') {
+            alertClass = 'alert-danger';
+            icon = 'fa-exclamation-circle';
+        }
         
         $formAlert.html(
             '<div class="alert ' + alertClass + ' alert-dismissible fade in" role="alert">' +
@@ -154,12 +157,6 @@ $(function () {
         $('html, body').animate({
             scrollTop: $formAlert.offset().top - 100
         }, 500);
-        
-        if (type === 'success') {
-            setTimeout(function() {
-                $formAlert.find('.alert').fadeOut();
-            }, 5000);
-        }
     }
 
 });
