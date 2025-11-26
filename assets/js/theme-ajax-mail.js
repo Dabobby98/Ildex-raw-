@@ -6,15 +6,19 @@ $(function () {
     var $contactFormAlert = $contactForm.find('.form-alert');
     var $contactSubmitBtn = $contactForm.find('#contact-submit-btn');
     var originalContactBtnText = $contactSubmitBtn.html();
+    var contactIframeName = 'mailchimp-contact-iframe-' + Date.now();
 
     $contactForm.find('.form-control').tooltip({placement: 'top', trigger: 'manual'}).tooltip('hide');
     $contactForm.find('.form-control').on('blur', function(){
         $(this).tooltip({placement: 'top', trigger: 'manual'}).tooltip('hide');
     });
 
+    // Create hidden iframe for form submission
+    var $contactIframe = $('<iframe name="' + contactIframeName + '" style="display:none;"></iframe>');
+    $('body').append($contactIframe);
+
     // Handle contact form submission
     $contactForm.on('submit', function(e) {
-        e.preventDefault();
         
         // Validate Email
         var email = $contactForm.find('.input-email').val();
@@ -22,44 +26,25 @@ $(function () {
         if (!filter.test(email)) {
             $contactForm.find('.input-email').tooltip({placement: 'top', trigger: 'manual'}).tooltip('show');
             $contactForm.find('.input-email').focus();
+            e.preventDefault();
             return false;
         }
 
+        // Set form to submit to iframe
+        $contactForm.attr('target', contactIframeName);
+
         // Show loading message
-        showContactFormAlert('info', 'Đang gửi tin nhắn của bạn...');
         $contactSubmitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang gửi...');
 
-        // Submit to Mailchimp using JSONP - sử dụng list ID đúng cho Contact/Questions
-        var mailchimpUrl = 'https://ildex-vietnam.us11.list-manage.com/subscribe/post-json?u=2dae538b15c3fb52220a11db5&id=2d5994350c&c=?';
-        
-        var formData = $contactForm.serialize();
-        
-        $.ajax({
-            type: 'GET',
-            url: mailchimpUrl,
-            data: formData,
-            cache: false,
-            dataType: 'jsonp',
-            contentType: 'application/json; charset=utf-8',
-            success: function(data) {
-                if (data.result === 'success') {
-                    showContactFormAlert('success', 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.');
-                    $contactForm[0].reset();
-                } else {
-                    var errorMsg = data.msg || 'Có lỗi xảy ra. Vui lòng thử lại.';
-                    // Remove Mailchimp error codes
-                    errorMsg = errorMsg.replace(/0 - /g, '').replace(/1 - /g, '').replace(/6 - /g, '');
-                    showContactFormAlert('error', errorMsg);
-                }
-                $contactSubmitBtn.prop('disabled', false).html(originalContactBtnText);
-            },
-            error: function() {
-                showContactFormAlert('error', 'Có lỗi kết nối. Vui lòng kiểm tra mạng và thử lại.');
-                $contactSubmitBtn.prop('disabled', false).html(originalContactBtnText);
-            }
+        // Handle iframe load (submission complete)
+        $contactIframe.off('load').on('load', function() {
+            $contactSubmitBtn.prop('disabled', false).html(originalContactBtnText);
+            showContactFormAlert('success', 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.');
+            $contactForm[0].reset();
         });
 
-        return false;
+        // Allow form to submit normally to iframe
+        return true;
     });
 
     function showContactFormAlert(type, message) {
