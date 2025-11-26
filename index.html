@@ -284,120 +284,99 @@
                                                                 </div>
 
                                                                 <form
-                                                                    id="registration-form-alt"
-                                                                    name="registration-form-alt"
-                                                                    class="registration-form alt"
-                                                                    action="#"
-                                                                    method="post"
-                                                                >
-                                                                    <div
-                                                                        class="row"
-                                                                    >
-                                                                        <div
-                                                                            class="col-sm-12 form-alert"
-                                                                        ></div>
-                                                                        <div
-                                                                            class="col-sm-12"
-                                                                        >
-                                                                            <div
-                                                                                class="form-group"
-                                                                            >
-                                                                                <input
-                                                                                    type="text"
-                                                                                    class="form-control input-name"
-                                                                                    data-toggle="tooltip"
-                                                                                    title="Name is required"
-                                                                                    placeholder="Tên của bạn"
-                                                                                />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-sm-12"
-                                                                        >
-                                                                            <div
-                                                                                class="form-group"
-                                                                            >
-                                                                                <input
-                                                                                    type="text"
-                                                                                    class="form-control input-email"
-                                                                                    data-toggle="tooltip"
-                                                                                    title="Mail is required"
-                                                                                    placeholder="Email của bạn"
-                                                                                />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-sm-12"
-                                                                        >
-                                                                            <div
-                                                                                class="form-group"
-                                                                            >
-                                                                                <input
-                                                                                    type="text"
-                                                                                    class="form-control input-phone"
-                                                                                    placeholder="Số điện thoại"
-                                                                                />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-sm-12"
-                                                                        >
-                                                                            <div
-                                                                                class="form-group selectpicker-wrapper"
-                                                                            >
-                                                                                <select
-                                                                                    class="selectpicker input-price"
-                                                                                    data-live-search="true"
-                                                                                    data-width="100%"
-                                                                                    data-toggle="tooltip"
-                                                                                    title="Register as"
-                                                                                >
-                                                                                    
-                                                                                    <option>
-                                                                                        Gian
-                                                                                        Thô(tối
-                                                                                        thiểu
-                                                                                        24m2)
-                                                                                    </option>
-                                                                                    <option>
-                                                                                        Gian
-                                                                                        Thường(tối
-                                                                                        thiểu
-                                                                                        12m2)
-                                                                                    </option>
-                                                                                    <option>
-                                                                                        Gian
-                                                                                        Cao
-                                                                                        Cấp(tối
-                                                                                        thiểu
-                                                                                        12m2)
-                                                                                    </option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-sm-12"
-                                                                        >
-                                                                            <div
-                                                                                class="text-center"
-                                                                            >
-                                                                                <button
-                                                                                    data-animation="flipInY"
-                                                                                    data-animation-delay="100"
-                                                                                    class="btn btn-theme btn-block submit-button"
-                                                                                    type="submit"
-                                                                                >
-                                                                                    Đăng
-                                                                                    Ký
-                                                                                    Ngay
-                                                                                    <i
-                                                                                        class="fa fa-arrow-circle-right"
-                                                                                    ></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
+    id="registration-form-alt"
+    name="registration-form-alt"
+    class="registration-form alt"
+    action="https://ildex-vietnam.us11.list-manage.com/subscribe/post"
+    method="POST"
+>
+    <!-- MAILCHIMP HIDDEN REQUIRED -->
+    <input type="hidden" name="u" value="2dae538b15c3fb52220a11db5">
+    <input type="hidden" name="id" value="2d5994350c">
+    <input type="hidden" name="ht" value="57a04e082a04f7b9ed430b81585fa6dba5ec2e6c:MTc2NDEzNTYzMC45NjQ0">
+    <input type="hidden" name="mc_signupsource" value="hosted">
+
+    <!-- HONEYPOT FIELD (BOT PREVENTION) -->
+    <div class="field-shift" aria-hidden="true" style="position:absolute; left:-5000px;">
+        <input type="text" name="b_name" tabindex="-1" value="">
+        <input type="email" name="b_email" tabindex="-1" value="">
+        <textarea name="b_comment" tabindex="-1"></textarea>
+    </div>
+
+    <div class="row">
+
+        <!-- TÊN CỦA BẠN → MERGE1 -->
+        <div class="col-sm-12">
+            <div class="form-group">
+                <input
+                    type="text"
+                    name="MERGE1"
+                    class="form-control input-name"
+                    placeholder="Tên của bạn"
+                    required
+                />
+            </div>
+        </div>
+
+        <!-- EMAIL → MERGE0 -->
+        <div class="col-sm-12">
+            <div class="form-group">
+                <input
+                    type="email"
+                    name="MERGE0"
+                    class="form-control input-email"
+                    placeholder="Email của bạn"
+                    required
+                />
+            </div>
+        </div>
+
+        <!-- PHONE → MERGE4 (Ghép 3 phần thành 1 số) -->
+        <!-- Mailchimp mặc định chia 3 field, nhưng bạn chỉ cần gửi 1 field hợp lệ, Mailchimp vẫn nhận -->
+        <div class="col-sm-12">
+            <div class="form-group">
+                <input
+                    type="text"
+                    name="MERGE4"
+                    class="form-control input-phone"
+                    placeholder="Số điện thoại"
+                    required
+                />
+            </div>
+        </div>
+
+        <!-- LOẠI GIAN HÀNG → MERGE2 -->
+        <div class="col-sm-12">
+            <div class="form-group selectpicker-wrapper">
+                <select
+                    class="selectpicker input-price"
+                    name="MERGE2"
+                    data-live-search="true"
+                    data-width="100%"
+                    required
+                >
+                    <option value="Gian Thường">Gian Thường (tối thiểu 12m2)</option>
+                    <option value="Gian Thô">Gian Thô (tối thiểu 24m2)</option>
+                    <option value="Gian Cao Cấp">Gian Cao Cấp (tối thiểu 12m2)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- NÚT SUBMIT -->
+        <div class="col-sm-12">
+            <div class="text-center">
+                <button
+                    class="btn btn-theme btn-block submit-button"
+                    type="submit"
+                >
+                    Đăng Ký Ngay
+                    <i class="fa fa-arrow-circle-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
                                                             </div>
                                                         </div>
                                                         <div
