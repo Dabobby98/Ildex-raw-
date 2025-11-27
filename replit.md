@@ -38,11 +38,12 @@ This is a static HTML website for ILDEX VIETNAM 2026, an agricultural livestock 
   - Added success/error message handling in Vietnamese
   - Mailchimp list: https://ildex-vietnam.us11.list-manage.com/subscribe?u=2dae538b15c3fb52220a11db5&id=2d5994350c
 - 2025-11-27: SEO Optimization and Cleanup
-  - Removed unused CSS theme files (kept only theme-yellow-1.css)
-  - Removed awwwards.css and theme-config.js (not needed for ILDEX)
+  - Removed unused CSS theme files (kept only theme.css, theme-yellow-1.css, custom.css)
+  - Removed awwwards.css, theme-config.js, and all theme-*.less files
   - Fixed duplicate ID issue (changed second "about" to "why-vietnam")
-  - Added descriptive alt text for all images for better SEO
-  - SEO meta tags verified: title, description, keywords, Open Graph, Twitter Cards, Schema.org markup
+  - Added descriptive alt text for all 15 images for better SEO
+  - Cleaned up theme-config.js references from all secondary HTML pages
+  - SEO verified: title, description, keywords, Open Graph, Twitter Cards, Schema.org Event markup
 
 ## User Preferences
 None specified yet.
