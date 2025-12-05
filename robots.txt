@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 Disallow: /assets/php/
 
-Sitemap: https://ildex2026.itec.com.vn/sitemap.xml
+Sitemap: https://ildex.io.vn/sitemap.xml
